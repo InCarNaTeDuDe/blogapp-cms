@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Admin Panel</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Blog Admin</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h1 class="mt-5">Admin Panel</h1>
+        <% if (success_msg) { %>
+            <div class="alert alert-success">
+                <%= success_msg %>
+            </div>
+            <% } %>
+                <a href="/admin/add" class="btn btn-primary mb-3">Add New Post</a>
+                <ul class="list-group">
+                    <% posts.forEach(post=> { %>
+                        <li class="list-group-item">
+                            <h2>
+                                <%= post.title %>
+                            </h2>
+                            <p>
+                                <%- post.body %>
+                            </p>
+                            <a href="/admin/edit/<%= post._id %>" class="btn btn-secondary btn-sm">Edit</a>
+                            <a href="/admin/delete/<%= post._id %>" class="btn btn-danger btn-sm">Delete</a>
+                        </li>
+                        <% }) %>
+                </ul>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
