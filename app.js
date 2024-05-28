@@ -5,7 +5,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const bcrypt = require('bcryptjs');
 const app = express();
-
+const path = require('path');
 
 // mongoose.connect('mongodb+srv://@cluster0.uyglava.mongodb.net/blogpostDB?retryWrites=true&w=majority', {
 //     useNewUrlParser: true,
@@ -15,9 +15,11 @@ const app = express();
 //     .catch(err => console.log('MongoDB connection error:', err));
   
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// Static folder
 
 app.use(session({
     secret: 'secret',
