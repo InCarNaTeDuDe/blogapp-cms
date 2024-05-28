@@ -1,50 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <title>Admin Panel</title>
-</head>
+    <style>
+      .post-body {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        overflow: hidden;
+      }
+      /* Keyframes for fade-out animation */
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          display: none; /* Hides the element after fading out */
+        }
+      }
 
-<body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Blog Admin</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+      /* Apply the animation to the alert */
+      .alert.alert-success {
+        animation: fadeOut 2s ease-out 2s forwards; /* Change 5s to the desired delay before fading out */
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('../partials/header') %>
     <div class="container">
-        <h1 class="mt-5">Admin Panel</h1>
-        <% if (success_msg) { %>
-            <div class="alert alert-success">
-                <%= success_msg %>
+      <marquee behavior="alternate" direction="left" scrollamount="5">
+        <h4 class="mt-5 pt-3">⭐Recent Articles⭐</h4></marquee
+      >
+
+      <% if (success_msg&& success_msg.length) { %>
+      <div class="alert alert-success"><%= success_msg %></div>
+      <% } %>
+      <a href="/admin/add" class="btn btn-primary mb-3">
+        &#x1F4DD;Add New Post</a
+      >
+      <ul class="list-group">
+        <% posts.forEach(post=> { %>
+        <li class="list-group-item">
+          <h5><%= post.title %></h5>
+          <div class="post-body-container">
+            <div class="post-body"><%- post.body %></div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center mt-2">
+            <div>
+              <a
+                href="/admin/edit/<%= post._id %>"
+                class="btn btn-secondary btn-sm me-2"
+                >&#9999;&#65039;Edit</a
+              >
+              <a
+                href="/admin/delete/<%= post._id %>"
+                class="btn btn-danger btn-sm"
+                >&#x1F5D1;&#xFE0F;Delete</a
+              >
             </div>
-            <% } %>
-                <a href="/admin/add" class="btn btn-primary mb-3">Add New Post</a>
-                <ul class="list-group">
-                    <% posts.forEach(post=> { %>
-                        <li class="list-group-item">
-                            <h2>
-                                <%= post.title %>
-                            </h2>
-                            <p>
-                                <%- post.body %>
-                            </p>
-                            <a href="/admin/edit/<%= post._id %>" class="btn btn-secondary btn-sm">Edit</a>
-                            <a href="/admin/delete/<%= post._id %>" class="btn btn-danger btn-sm">Delete</a>
-                        </li>
-                        <% }) %>
-                </ul>
+            <a href="/admin/view/<%= post._id %>" class="ms-auto"
+              >Read Full Article</a
+            >
+          </div>
+        </li>
+        <% }) %>
+      </ul>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
+  </body>
 </html>
